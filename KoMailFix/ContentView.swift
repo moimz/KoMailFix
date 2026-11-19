@@ -21,7 +21,7 @@ struct ContentView: View {
 
     private var version: String {
         let info = Bundle.main.infoDictionary
-        return "v\(info?["CFBundleShortVersionString"] as? String ?? "?")"
+        return "v\(info?["CFBundleShortVersionString"] as? String ?? "?") (\(info?["CFBundleVersion"] as? String ?? "?"))"
     }
 
     private var header: some View {
@@ -34,7 +34,7 @@ struct ContentView: View {
                     Text("KoMailFix").font(.largeTitle.bold())
                     Text(version).foregroundStyle(.secondary)
                 }
-                Text("Mail 앱에서 한글 첨부파일 이름이 ????로 깨지는 문제를 고칩니다.")
+                Text("기본 Mail 앱에서 한글 첨부파일 이름 문제를 고칩니다.")
                     .foregroundStyle(.secondary)
             }
         }
@@ -45,14 +45,14 @@ struct ContentView: View {
     private var extensionSection: some View {
         GroupBox {
             VStack(alignment: .leading, spacing: 8) {
-                Text("새로 여는 메일은 확장 프로그램이 자동으로 고쳐서 보여줍니다. 한 번만 켜 두면 이 앱을 열어둘 필요는 없습니다.")
+                Text("새로 확인한 메일의 한글 첨부파일 이름은 자동으로 고쳐집니다. Mail 확장 프로그램에 등록하면 이 앱을 실행할 필요는 없습니다.")
                 VStack(alignment: .leading, spacing: 2) {
                     Text("1. Mail 실행 → 설정(⌘,) → 확장 프로그램")
                     Text("2. 왼쪽 목록에서 **KoMailFix** 체크")
-                    Text("3. 깨졌던 메일을 다시 열어 확인")
+                    Text("3. 한글 첨부파일이 잘못 표시되던 메일을 다시 열어 확인")
                 }
                 .font(.callout)
-                Text("보내는 메일의 한글 첨부파일 이름은 NFC(완성형)로 바꿔 보냅니다. Mail은 이름을 자모가 분리된 NFD로 보내서 Windows에서 ㅎㅏㄴㄱㅡㄹ처럼 보일 수 있습니다. 작성 창의 **서명** 옵션이 켜져 있을 때만 동작하며, 실제로 서명하지는 않습니다.")
+                Text("보내는 메일도 상대방 메일함에서 한글 첨부파일 이름이 제대로 보이도록 NFC로 자동으로 바꿔 보냅니다. 이 기능을 위해 메일 작성 화면에서 **서명** 옵션을 켜지만, 실제로 서명하지는 않습니다.")
                     .font(.callout)
                     .foregroundStyle(.secondary)
                 Button("Mail 열기") { repairer.openMail() }
@@ -60,7 +60,7 @@ struct ContentView: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(6)
         } label: {
-            Label("메일 확장 프로그램", systemImage: "puzzlepiece.extension")
+            SectionTitle("메일 확장 프로그램", systemImage: "puzzlepiece.extension")
         }
     }
 
@@ -80,7 +80,7 @@ struct ContentView: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(6)
         } label: {
-            Label("기존 메일 복구", systemImage: "wrench.and.screwdriver")
+            SectionTitle("기존 메일 복구", systemImage: "wrench.and.screwdriver")
         }
     }
 
@@ -187,7 +187,7 @@ struct ContentView: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(6)
         } label: {
-            Label("백업", systemImage: "clock.arrow.circlepath")
+            SectionTitle("백업", systemImage: "clock.arrow.circlepath")
         }
     }
 }
@@ -208,14 +208,31 @@ private struct UpdateSection: View {
                     Button("업데이트 확인…") { updater.checkForUpdates() }
                         .disabled(!updater.canCheck)
                 }
-                Text("이 앱을 열 때 새 버전이 있는지 확인하고, 있으면 설치할지 묻습니다. 업데이트한 뒤에는 Mail을 종료했다가 다시 열어야 새 확장이 적용됩니다.")
+                Text("이 앱을 실행할 때 새 버전이 있는지 확인하고, 새 버전이 있으면 업데이트할지 묻습니다. 업데이트한 뒤에는 Mail 앱을 다시 실행해야 업데이트 내용이 반영됩니다.")
                     .font(.callout)
                     .foregroundStyle(.secondary)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(6)
         } label: {
-            Label("업데이트", systemImage: "arrow.triangle.2.circlepath")
+            SectionTitle("업데이트", systemImage: "arrow.triangle.2.circlepath")
         }
+    }
+}
+
+/// 칸 제목 (메일 확장 프로그램 · 기존 메일 복구 · 백업 · 업데이트)
+private struct SectionTitle: View {
+    let title: String
+    let systemImage: String
+
+    init(_ title: String, systemImage: String) {
+        self.title = title
+        self.systemImage = systemImage
+    }
+
+    var body: some View {
+        Label(title, systemImage: systemImage)
+            .font(.title3.weight(.semibold))
+            .padding(.bottom, 2)
     }
 }
