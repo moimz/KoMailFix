@@ -109,6 +109,7 @@
 				4B0000000000000000000701 /* Frameworks */,
 				4B0000000000000000000911 /* Resources */,
 				4B0000000000000000000601 /* Embed Foundation Extensions */,
+				4B0000000000000000001201 /* Thin Sparkle */,
 			);
 			buildRules = (
 			);
@@ -198,6 +199,24 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		4B0000000000000000001201 /* Thin Sparkle */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Thin Sparkle";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "sh \"$SRCROOT/Scripts/thin-sparkle.sh\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		4B0000000000000000000901 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -278,6 +297,7 @@
 				CODE_SIGN_ENTITLEMENTS = Config/KoMailFix.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Config/KoMailFix-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = KoMailFix;
@@ -299,6 +319,7 @@
 				CODE_SIGN_ENTITLEMENTS = Config/KoMailFix.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Config/KoMailFix-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = KoMailFix;
